@@ -1,7 +1,10 @@
-# GTA Vice City 100% Interactive Checklist
+# GTA Vice City Progress Checklist
 
 An interactive checklist for tracking progress in GTA Vice City.
 
 Features:
-1. Saving: it's possible to save your progress to a cookie in your browser.
-2. Buttons: forget about clicking a billion checkboxes just to catch up with your progress in-game.
+1. Saving: with the power of cookies, you can now save your progress locally without an account!
+2. Buttons: use our revolutionary buttons to select multiple checklists all at once!
+3. Progress: calculate your progress percentage on the fly with our innovative<sup>1</sup> algorithm!
+
+<sup>1</sup> It's just a couple of for loops, but who said innovations had to be complicated?

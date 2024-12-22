@@ -11,8 +11,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 5rem 0px 0px;
-            padding: 0px;
+            margin: 5rem 0 0;
+            padding: 0;
         }
 
         header {
@@ -24,13 +24,13 @@
         }
 
         h1, section h2 {
-            margin: 1rem 0rem 0rem;
+            margin: 1rem 0 0;
             padding: 0.5rem 0.5rem 0.5rem 0.6rem;
         }
 
         h3 {
             text-align: left;
-            margin: 0rem;
+            margin: 0;
             padding: 0.2rem;
         }
 
@@ -69,7 +69,7 @@
 
         div.buttons {
             vertical-align: middle;
-            padding: 0.5rem 0.5rem 0rem;
+            padding: 0.5rem 0.5rem 0;
         }
 
         label {
@@ -83,7 +83,7 @@
         section {
             border-bottom: solid;
             border-bottom-width: 0.1rem;
-            padding: 0.3rem 0rem 1rem;
+            padding: 0.3rem 0 1rem;
         }
 
         .sticky {
@@ -94,19 +94,19 @@
     </style>
     <title>GTA VC 100% Checklist</title>
     <script>
-        var checkboxes = 222
+        let checkboxes = 222
         
         function marcarTudo(id_inicial,id_final,estado) {
             for (let index = id_inicial; index <= id_final; index++) {
-                var caixa = document.getElementById(index.toString());
-                caixa.checked = estado;
-            };
+                document.getElementById(index.toString()).checked = estado;
+            }
             checarPorcentagem();
-        };
+        }
 
         function checarPorcentagem() {
             var porcentagem = 0;
             var points = 100 / 154;
+            var division = 0
 
             // Missions that give only one point per group.
             var beginning = 0;
@@ -119,57 +119,57 @@
 
                 if ((index >= 1) && (index <= 2)) {
                     /* First two missions. */
-                    if (caixa.checked == true) {
+                    if (caixa.checked === true) {
                         beginning += 1;
-                    };
+                    }
                 } else if ((index >= 65) && (index <= 88)) {
                     /* Sunshine Autos Lists (1 point per list). */
-                    if (caixa.checked == true) {
+                    if (caixa.checked === true) {
                         exports += 1;
-                    };
+                    }
                 } else if ((index >= 116) && (index <= 130)) {
                     /* Robberies. */
-                    if (caixa.checked == true) {
+                    if (caixa.checked === true) {
                         robberies += 1;
-                    };
+                    }
                 } else if ((index >= 132) && (index <= 166)) {
                     /* Rampages. */
-                    if (caixa.checked == true) {
+                    if (caixa.checked === true) {
                         rampages += 1;
-                    };
-                } else if (index == 91) {
+                    }
+                } else if (index === 91) {
                     /* Autocide counts as two points for some reason. */
-                    if (caixa.checked == true) {
+                    if (caixa.checked === true) {
                         porcentagem += points * 2;
-                    };
-                } else if (caixa.checked == true) {
+                    }
+                } else if (caixa.checked === true) {
                     porcentagem += points;
-                };
-            };
+                }
+            }
             
             if (beginning > 0) {
-                    var division = Math.floor(beginning / 2);
+                    division = Math.floor(beginning / 2);
                     porcentagem += (points * division);
                     beginning = 0;
-            };
+            }
 
             if (exports > 0) {
-                    var division = Math.floor(exports / 6);
+                    division = Math.floor(exports / 6);
                     porcentagem += (points * division);
                     exports = 0;
-            };
+            }
 
             if (robberies > 0) {
-                    var division = Math.floor(robberies / 15);
+                    division = Math.floor(robberies / 15);
                     porcentagem += (points * division);
                     robberies = 0;
-            };
+            }
 
             if (rampages > 0) {
-                    var division = Math.floor(rampages / 35);
+                    division = Math.floor(rampages / 35);
                     porcentagem += (points * division);
                     rampages = 0;
-            };
+            }
 
             var score = document.getElementById("percent");
             if (porcentagem > 99.99) {
@@ -180,28 +180,28 @@
 
             } else {
                 score.innerText = "Percentage completed: " + Math.floor(porcentagem * 100) / 100 + "% ";
-            };
+            }
 
-        };
+        }
 
         function saveToCookie() {
             
             var state = "";
             var expiration_date = new Date();
-            var cookie_string = '';
+            var cookie_string;
 
             for (let index = 1; index <= checkboxes; index++) {
                 var caixa = document.getElementById(index.toString());
-                if (caixa.checked == true) {
+                if (caixa.checked === true) {
                     state += index.toString() + ",";
-                };
-            };
+                }
+            }
 
             expiration_date.setFullYear(expiration_date.getFullYear() + 1);
             cookie_string = "selected=" + state.slice(0,-1) + "; Expires=" + expiration_date.toUTCString() + "; SameSite=None; Secure";
             console.log(cookie_string);
             document.cookie = cookie_string;
-        };
+        }
 
         function loadFromCookie() {
             var state = document.cookie;
@@ -214,7 +214,7 @@
                 selected.forEach(element => {
                     document.getElementById(element).checked = true;
                 });
-            };
+            }
 
             checarPorcentagem();
         }
@@ -240,30 +240,28 @@
     <section>
         <h2>
             ⭐ Story Missions
-            <p>
-                <button onclick="marcarTudo(1,22,true)">Select All</button>
-                <button onclick="marcarTudo(1,22,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(1,22,true)">Select All</button>
+            <button onclick="marcarTudo(1,22,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 ✨ The Introduction
-                <p>
-                    <button onclick="marcarTudo(1,2,true)">All</button>
-                    <button onclick="marcarTudo(1,2,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(1,2,true)">All</button>
+                <button onclick="marcarTudo(1,2,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="1" id="1"><label for="1">✨ In the Beginning...<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="2" id="2"><label for="2">✨ An Old Friend<br></label>
         </div>
         <div>
             <h3>
                 👨‍⚖️ Ken Rosenberg
-                <p>
-                    <button onclick="marcarTudo(3,6,true)">All</button>
-                    <button onclick="marcarTudo(3,6,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(3,6,true)">All</button>
+                <button onclick="marcarTudo(3,6,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="3" id="3"><label for="3">👨‍⚖️ The Party<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="4" id="4"><label for="4">👨‍⚖️ Back Alley Brawl<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="5" id="5"><label for="5">👨‍⚖️ Jury Fury<br></label>
@@ -272,11 +270,11 @@
         <div>
             <h3>
                 🤠 Avery Carrington
-                <p>
-                    <button onclick="marcarTudo(7,9,true)">All</button>
-                    <button onclick="marcarTudo(7,9,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(7,9,true)">All</button>
+                <button onclick="marcarTudo(7,9,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="7" id="7"><label for="7">🤠 Four Iron<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="8" id="8"><label for="8">🤠 Demolition Man<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="9" id="9"><label for="9">🤠 Two Bit Hit<br></label>
@@ -284,11 +282,11 @@
         <div>
             <h3>
                 🛥️ Juan Cortez
-                <p>
-                    <button onclick="marcarTudo(10,14,true)">All</button>
-                    <button onclick="marcarTudo(10,14,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(10,14,true)">All</button>
+                <button onclick="marcarTudo(10,14,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="10" id="10"><label for="10">🛥️ Treacherous Swine<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="11" id="11"><label for="11">🛥️ Mall Shootout<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="12" id="12"><label for="12">🛥️ Guardian Angels<br></label>
@@ -298,11 +296,11 @@
         <div>
             <h3>
                 🦹‍♂️ Ricardo Diaz
-                <p>
-                    <button onclick="marcarTudo(15,19,true)">All</button>
-                    <button onclick="marcarTudo(15,19,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(15,19,true)">All</button>
+                <button onclick="marcarTudo(15,19,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="15" id="15"><label for="15">🦹‍♂️ The Chase<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="16" id="16"><label for="16">🦹‍♂️ Phnom Penh '86<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="17" id="17"><label for="17">🦹‍♂️ The Fastest Boat<br></label>
@@ -312,50 +310,48 @@
         <div>
             <h3>
                 🪩 Kent Paul
-                <p>
-                    <button onclick="marcarTudo(20,20,true)">All</button>
-                    <button onclick="marcarTudo(20,20,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(20,20,true)">All</button>
+                <button onclick="marcarTudo(20,20,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="20" id="20"><label for="20">🪩 Death Row<br></label>
         </div>
         <div>
             <h3>
                 💵 Print Works
-                <p>
-                    <button onclick="marcarTudo(21,21,true)">All</button>
-                    <button onclick="marcarTudo(21,21,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(21,21,true)">All</button>
+                <button onclick="marcarTudo(21,21,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="21" id="21"><label for="21">💵 Cap the Collector<br></label>
         </div>
         <div>
             <h3>
                 🐊 Tommy Vercetti
-                <p>
-                    <button onclick="marcarTudo(22,22,true)">All</button>
-                    <button onclick="marcarTudo(22,22,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(22,22,true)">All</button>
+                <button onclick="marcarTudo(22,22,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="22" id="22"><label for="22">🐊 Keep Your Friends Close...<br></label>
         </div>
     </section>
     <section>
         <h2>
             👪 Gang Missions
-            <p>
-                <button onclick="marcarTudo(23,35,true)">Select All</button>
-                <button onclick="marcarTudo(23,35,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(23,35,true)">Select All</button>
+            <button onclick="marcarTudo(23,35,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 ☕ Umberto Robina
-                <p>
-                    <button onclick="marcarTudo(23,26,true)">All</button>
-                    <button onclick="marcarTudo(23,26,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(23,26,true)">All</button>
+                <button onclick="marcarTudo(23,26,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="23" id="23"><label for="23">☕ Stunt Boat Challenge<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="24" id="24"><label for="24">☕ Cannon Fodder<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="25" id="25"><label for="25">☕ Naval Engagement<br></label>
@@ -364,11 +360,11 @@
         <div>
             <h3>
                 🫖 Auntie Poulet
-                <p>
-                    <button onclick="marcarTudo(27,29,true)">All</button>
-                    <button onclick="marcarTudo(27,29,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(27,29,true)">All</button>
+                <button onclick="marcarTudo(27,29,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="27" id="27"><label for="27">🫖 Juju Scramble<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="28" id="28"><label for="28">🫖 Bombs Away!<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="29" id="29"><label for="29">🫖 Dirty Lickin's<br></label>
@@ -376,11 +372,11 @@
         <div>
             <h3>
                 👊 Love Fist
-                <p>
-                    <button onclick="marcarTudo(30,32,true)">All</button>
-                    <button onclick="marcarTudo(30,32,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(30,32,true)">All</button>
+                <button onclick="marcarTudo(30,32,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="30" id="30"><label for="30">👊 Love Juice<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="31" id="31"><label for="31">👊 Psycho Killer<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="32" id="32"><label for="32">👊 Publicity Tour<br></label>
@@ -388,11 +384,11 @@
         <div>
             <h3>
                 🏍️ Mitch Baker
-                <p>
-                    <button onclick="marcarTudo(33,35,true)">All</button>
-                    <button onclick="marcarTudo(33,35,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(33,35,true)">All</button>
+                <button onclick="marcarTudo(33,35,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="33" id="33"><label for="33">🏍️ Alloy Wheels of Steel<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="34" id="34"><label for="34">🏍️ Messing with the Man<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="35" id="35"><label for="35">🏍️ Hog Tied<br></label>
@@ -401,19 +397,17 @@
     <section>
         <h2>
             🏢 Asset Missions
-            <p>
-                <button onclick="marcarTudo(36,64,true)">Select All</button>
-                <button onclick="marcarTudo(36,64,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(36,64,true)">Select All</button>
+            <button onclick="marcarTudo(36,64,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 🐊 Tommy Vercetti
-                <p>
-                    <button onclick="marcarTudo(36,38,true)">All</button>
-                    <button onclick="marcarTudo(36,38,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(36,38,true)">All</button>
+                <button onclick="marcarTudo(36,38,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="36" id="36"><label for="36">🐊 Shakedown<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="37" id="37"><label for="37">🐊 Bar Brawl<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="38" id="38"><label for="38">🐊 Cop Land<br></label>
@@ -421,22 +415,22 @@
         <div>
             <h3>
                 🛢️ Phil's Place
-                <p>
-                    <button onclick="marcarTudo(39,40,true)">All</button>
-                    <button onclick="marcarTudo(39,40,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(39,40,true)">All</button>
+                <button onclick="marcarTudo(39,40,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="39" id="39"><label for="39">🛢️ Gun Runner<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="40" id="40"><label for="40">🛢️ Boomshine Saigon<br></label>
         </div>
         <div>
             <h3>
                 🎥 InterGlobal Studios
-                <p>
-                    <button onclick="marcarTudo(41,45,true)">All</button>
-                    <button onclick="marcarTudo(41,45,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(41,45,true)">All</button>
+                <button onclick="marcarTudo(41,45,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="41" id="41"><label for="41">💲 Buy the Asset ($60k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="42" id="42"><label for="42">🎥 Recruitment Drive<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="43" id="43"><label for="43">🎥 Dildo Dodo<br></label>
@@ -446,11 +440,11 @@
         <div>
             <h3>
                 🚕 Kaufman Cabs
-                <p>
-                    <button onclick="marcarTudo(46,49,true)">All</button>
-                    <button onclick="marcarTudo(46,49,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(46,49,true)">All</button>
+                <button onclick="marcarTudo(46,49,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="46" id="46"><label for="46">💲 Buy the Asset ($40k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="47" id="47"><label for="47">🚕 V.I.P.<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="48" id="48"><label for="48">🚕 Friendly Rivalry<br></label>
@@ -459,11 +453,11 @@
         <div>
             <h3>
                 🪩 Malibu Club
-                <p>
-                    <button onclick="marcarTudo(50,54,true)">All</button>
-                    <button onclick="marcarTudo(50,54,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(50,54,true)">All</button>
+                <button onclick="marcarTudo(50,54,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="50" id="50"><label for="50">💲 Buy the Asset ($120k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="51" id="51"><label for="51">🪩 No Escape?<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="52" id="52"><label for="52">🪩 The Shootist<br></label>
@@ -473,11 +467,11 @@
         <div>
             <h3>
                 💵 Print Works
-                <p>
-                    <button onclick="marcarTudo(55,57,true)">All</button>
-                    <button onclick="marcarTudo(55,57,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(55,57,true)">All</button>
+                <button onclick="marcarTudo(55,57,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="55" id="55"><label for="55">💲 Buy the Asset ($70k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="56" id="56"><label for="56">💵 Spilling the Beans<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="57" id="57"><label for="57">💵 Hit the Courier<br></label>
@@ -485,63 +479,61 @@
         <div>
             <h3>
                 👯‍♀️ The Pole Position Club
-                <p>
-                    <button onclick="marcarTudo(58,59,true)">All</button>
-                    <button onclick="marcarTudo(58,59,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(58,59,true)">All</button>
+                <button onclick="marcarTudo(58,59,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="58" id="58"><label for="58">💲 Buy the Asset ($30k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="59" id="59"><label for="59">👯‍♀️ Spend $300 Inside<br></label>
         </div>
         <div>
             <h3>
                 🍦 Cherry Popper
-                <p>
-                    <button onclick="marcarTudo(60,61,true)">All</button>
-                    <button onclick="marcarTudo(60,61,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(60,61,true)">All</button>
+                <button onclick="marcarTudo(60,61,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="60" id="60"><label for="60">💲 Buy the Asset ($20k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="61" id="61"><label for="61">🍦 Distribution<br></label>
         </div>
         <div>
             <h3>
                 ⛵ Viceport Boatyard
-                <p>
-                    <button onclick="marcarTudo(62,63,true)">All</button>
-                    <button onclick="marcarTudo(62,63,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(62,63,true)">All</button>
+                <button onclick="marcarTudo(62,63,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="62" id="62"><label for="62">💲 Buy the Asset ($10k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="63" id="63"><label for="63">⛵ Checkpoint Charlie<br></label>
         </div>
         <div>
             <h3>
                 ☀️ Sunshine Autos
-                <p>
-                    <button onclick="marcarTudo(64,64,true)">All</button>
-                    <button onclick="marcarTudo(64,64,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(64,64,true)">All</button>
+                <button onclick="marcarTudo(64,64,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="64" id="64"><label for="64">💲 Buy the Asset ($50k)<br></label>
         </div>
     </section>
     <section>
         <h2>
             ☀️ Sunshine Autos Exports
-            <p>
-                <button onclick="marcarTudo(65,88,true)">Select All</button>
-                <button onclick="marcarTudo(65,88,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(65,88,true)">Select All</button>
+            <button onclick="marcarTudo(65,88,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 🚗 Street Cars
-                <p>
-                    <button onclick="marcarTudo(65,70,true)">All</button>
-                    <button onclick="marcarTudo(65,70,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(65,70,true)">All</button>
+                <button onclick="marcarTudo(65,70,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="65" id="65"><label for="65">🚗 Blista Compact<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="66" id="66"><label for="66">🚗 Esperanto<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="67" id="67"><label for="67">🚗 Idaho<br></label>
@@ -552,11 +544,11 @@
         <div>
             <h3>
                 🚙 Expensive Cars
-                <p>
-                    <button onclick="marcarTudo(71,76,true)">All</button>
-                    <button onclick="marcarTudo(71,76,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(71,76,true)">All</button>
+                <button onclick="marcarTudo(71,76,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="71" id="71"><label for="71">🚙 Admiral<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="72" id="72"><label for="72">🚙 Sabre<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="73" id="73"><label for="73">🚙 Sentinel<br></label>
@@ -567,11 +559,11 @@
         <div>
             <h3>
                 🏎️ Sports Cars
-                <p>
-                    <button onclick="marcarTudo(77,82,true)">All</button>
-                    <button onclick="marcarTudo(77,82,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(77,82,true)">All</button>
+                <button onclick="marcarTudo(77,82,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="77" id="77"><label for="77">🏎️ Banshee<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="78" id="78"><label for="78">🏎️ Cheetah<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="79" id="79"><label for="79">🏎️ Comet<br></label>
@@ -582,11 +574,11 @@
         <div>
             <h3>
                 🚒 Unique Cars
-                <p>
-                    <button onclick="marcarTudo(83,88,true)">All</button>
-                    <button onclick="marcarTudo(83,88,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(83,88,true)">All</button>
+                <button onclick="marcarTudo(83,88,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="83" id="83"><label for="83">🚒 Baggage Handler<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="84" id="84"><label for="84">🚒 Caddy<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="85" id="85"><label for="85">🚒 Cuban Hermes<br></label>
@@ -598,33 +590,31 @@
     <section>
         <h2>
             ⬅️ Side Missions
-            <p>
-                <button onclick="marcarTudo(89,131,true)">Select All</button>
-                <button onclick="marcarTudo(89,131,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(89,131,true)">Select All</button>
+            <button onclick="marcarTudo(89,131,false)">Select None</button>
         </h2>
         <div>
             <h3>
-                ☎️ Assination Contracts
-                <p>
-                    <button onclick="marcarTudo(89,93,true)">All</button>
-                    <button onclick="marcarTudo(89,93,false)">None</button>
-                </p>
+                📞 Assination Contracts
             </h3>
-            <input type="checkbox" onclick="checarPorcentagem()" name="89" id="89"><label for="89">☎️ Road Kill<br></label>
-            <input type="checkbox" onclick="checarPorcentagem()" name="90" id="90"><label for="90">☎️ Waste the Wife<br></label>
-            <input type="checkbox" onclick="checarPorcentagem()" name="91" id="91"><label for="91">☎️ Autocide<br></label>
-            <input type="checkbox" onclick="checarPorcentagem()" name="92" id="92"><label for="92">☎️ Check Out at the Check In<br></label>
-            <input type="checkbox" onclick="checarPorcentagem()" name="93" id="93"><label for="93">☎️ Loose Ends<br></label>
+            <p>
+                <button onclick="marcarTudo(89,93,true)">All</button>
+                <button onclick="marcarTudo(89,93,false)">None</button>
+            </p>
+            <input type="checkbox" onclick="checarPorcentagem()" name="89" id="89"><label for="89">📞 Road Kill<br></label>
+            <input type="checkbox" onclick="checarPorcentagem()" name="90" id="90"><label for="90">📞 Waste the Wife<br></label>
+            <input type="checkbox" onclick="checarPorcentagem()" name="91" id="91"><label for="91">📞 Autocide<br></label>
+            <input type="checkbox" onclick="checarPorcentagem()" name="92" id="92"><label for="92">📞 Check Out at the Check In<br></label>
+            <input type="checkbox" onclick="checarPorcentagem()" name="93" id="93"><label for="93">📞 Loose Ends<br></label>
         </div>
         <div>
             <h3>
                 🚘 Vehicle Missions
-                <p>
-                    <button onclick="marcarTudo(94,98,true)">All</button>
-                    <button onclick="marcarTudo(94,98,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(94,98,true)">All</button>
+                <button onclick="marcarTudo(94,98,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="94" id="94"><label for="94">🚘 Pizza Boy (Level 10)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="95" id="95"><label for="95">🚘 Paramedic (Level 12)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="96" id="96"><label for="96">🚘 Firefighter (Level 12)<br></label>
@@ -634,11 +624,11 @@
         <div>
             <h3>
                 🏠 Safe Houses
-                <p>
-                    <button onclick="marcarTudo(99,105,true)">All</button>
-                    <button onclick="marcarTudo(99,105,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(99,105,true)">All</button>
+                <button onclick="marcarTudo(99,105,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="99" id="99"><label for="99">🏠 3321 Vice Point ($2,5k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="100" id="100"><label for="100">🏠 Links View Apartment ($6k)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="101" id="101"><label for="101">🏠 El Swanko Casa ($8k)<br></label>
@@ -650,11 +640,11 @@
         <div>
             <h3>
                 📦 Hidden Packages
-                <p>
-                    <button onclick="marcarTudo(106,115,true)">All</button>
-                    <button onclick="marcarTudo(106,115,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(106,115,true)">All</button>
+                <button onclick="marcarTudo(106,115,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="106" id="106"><label for="106">📦 00-10 (Body Armor)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="107" id="107"><label for="107">📦 11-20 (Chainsaw)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="108" id="108"><label for="108">📦 21-30 (Python)<br></label>
@@ -669,11 +659,11 @@
         <div>
             <h3>
                 🧤 Robberies
-                <p>
-                    <button onclick="marcarTudo(116,130,true)">All</button>
-                    <button onclick="marcarTudo(116,130,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(116,130,true)">All</button>
+                <button onclick="marcarTudo(116,130,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="116" id="116"><label for="116">🧤 Family Jewels<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="117" id="117"><label for="117">🧤 Vinyl Countdown<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="118" id="118"><label for="118">🧤 Tooled Up<br></label>
@@ -693,30 +683,28 @@
         <div>
             <h3>
                 🇺🇸 Ammu-Nation
-                <p>
-                    <button onclick="marcarTudo(131,131,true)">All</button>
-                    <button onclick="marcarTudo(131,131,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(131,131,true)">All</button>
+                <button onclick="marcarTudo(131,131,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="131" id="131"><label for="131">🇺🇸 Rifle Range (45 points)<br></label>
         </div>
     </section>
     <section>
         <h2>
             💀 Rampages
-            <p>
-                <button onclick="marcarTudo(132,166,true)">Select All</button>
-                <button onclick="marcarTudo(132,166,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(132,166,true)">Select All</button>
+            <button onclick="marcarTudo(132,166,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 💀 First Rampages
-                <p>
-                    <button onclick="marcarTudo(132,138,true)">All</button>
-                    <button onclick="marcarTudo(132,138,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(132,138,true)">All</button>
+                <button onclick="marcarTudo(132,138,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="132" id="132"><label for="132">💀 Uzi (Kill 30)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="133" id="133"><label for="133">💀 .357 Python (Kill 25)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="134" id="134"><label for="134">💀 M4 (Kill 35)<br></label>
@@ -728,11 +716,11 @@
         <div>
             <h3>
                 💀 More Rampages
-                <p>
-                    <button onclick="marcarTudo(139,145,true)">All</button>
-                    <button onclick="marcarTudo(139,145,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(139,145,true)">All</button>
+                <button onclick="marcarTudo(139,145,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="139" id="139"><label for="139">💀 SPAS 12 (Kill 30)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="140" id="140"><label for="140">💀 MP (Kill 25)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="141" id="141"><label for="141">💀 Shotgun (Kill 25)<br></label>
@@ -744,11 +732,11 @@
         <div>
             <h3>
                 💀 Even More Rampages
-                <p>
-                    <button onclick="marcarTudo(146,152,true)">All</button>
-                    <button onclick="marcarTudo(146,152,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(146,152,true)">All</button>
+                <button onclick="marcarTudo(146,152,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="146" id="146"><label for="146">💀 Vehicle (Kill 30)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="147" id="147"><label for="147">💀 Molotov Cocktails (Kill 30)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="148" id="148"><label for="148">💀 Rocket Launcher (Kill 10)<br></label>
@@ -760,11 +748,11 @@
         <div>
             <h3>
                 💀 OMG Enough Rampages
-                <p>
-                    <button onclick="marcarTudo(153,159,true)">All</button>
-                    <button onclick="marcarTudo(153,159,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(153,159,true)">All</button>
+                <button onclick="marcarTudo(153,159,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="153" id="153"><label for="153">💀 Minigun (Kill 30)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="154" id="154"><label for="154">💀 Ruger (Kill 20)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="155" id="155"><label for="155">💀 Sniper Rifle (Kill 20)<br></label>
@@ -776,11 +764,11 @@
         <div>
             <h3>
                 💀 Finally, Last Rampages
-                <p>
-                    <button onclick="marcarTudo(160,166,true)">All</button>
-                    <button onclick="marcarTudo(160,166,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(160,166,true)">All</button>
+                <button onclick="marcarTudo(160,166,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="160" id="160"><label for="160">💀 SPAS 12 (Kill 35)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="161" id="161"><label for="161">💀 M60 (Kill 30)<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="162" id="162"><label for="162">💀 Uzi (Kill 30)<br></label>
@@ -793,19 +781,17 @@
     <section>
         <h2>
             🚲 Unique Jumps
-            <p>
-                <button onclick="marcarTudo(167,202,true)">Select All</button>
-                <button onclick="marcarTudo(167,202,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(167,202,true)">Select All</button>
+            <button onclick="marcarTudo(167,202,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 🏖️ Ocean Beach
-                <p>
-                    <button onclick="marcarTudo(167,172,true)">All</button>
-                    <button onclick="marcarTudo(167,172,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(167,172,true)">All</button>
+                <button onclick="marcarTudo(167,172,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="167" id="167"><label for="167">🏖️ Ocean Beach 1<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="168" id="168"><label for="168">🏖️ Ocean Beach 2<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="169" id="169"><label for="169">🏖️ Ocean Beach 3<br></label>
@@ -816,11 +802,11 @@
         <div>
             <h3>
                 ⛱️ Washington Beach
-                <p>
-                    <button onclick="marcarTudo(173,180,true)">All</button>
-                    <button onclick="marcarTudo(173,180,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(173,180,true)">All</button>
+                <button onclick="marcarTudo(173,180,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="173" id="173"><label for="173">⛱️ Washington Beach 1<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="174" id="174"><label for="174">⛱️ Washington Beach 2<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="175" id="175"><label for="175">⛱️ Washington Beach 3<br></label>
@@ -833,11 +819,11 @@
         <div>
             <h3>
                 🏬 Vice Point and Others
-                <p>
-                    <button onclick="marcarTudo(181,187,true)">All</button>
-                    <button onclick="marcarTudo(181,187,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(181,187,true)">All</button>
+                <button onclick="marcarTudo(181,187,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="181" id="181"><label for="181">🏬 Vice Point 1<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="182" id="182"><label for="182">🏬 Vice Point 2<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="183" id="183"><label for="183">🏬 Vice Point 3<br></label>
@@ -849,11 +835,11 @@
         <div>
             <h3>
                 🌆 Downtown and Little Haiti
-                <p>
-                    <button onclick="marcarTudo(188,194,true)">All</button>
-                    <button onclick="marcarTudo(188,194,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(188,194,true)">All</button>
+                <button onclick="marcarTudo(188,194,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="188" id="188"><label for="188">🌆 Downtown 1<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="189" id="189"><label for="189">🌆 Downtown 2<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="190" id="190"><label for="190">🌆 Downtown 3<br></label>
@@ -865,11 +851,11 @@
         <div>
             <h3>
                 ✈️ Escobar Intl. Airport
-                <p>
-                    <button onclick="marcarTudo(195,202,true)">All</button>
-                    <button onclick="marcarTudo(195,202,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(195,202,true)">All</button>
+                <button onclick="marcarTudo(195,202,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="195" id="195"><label for="195">✈️ Escobar Intl. 1<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="196" id="196"><label for="196">✈️ Escobar Intl. 2<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="197" id="197"><label for="197">✈️ Escobar Intl. 3<br></label>
@@ -883,19 +869,17 @@
     <section>
         <h2>
             🏁 Races
-            <p>
-                <button onclick="marcarTudo(203,222,true)">Select All</button>
-                <button onclick="marcarTudo(203,222,false)">Select None</button>
-            </p>
+            <button onclick="marcarTudo(203,222,true)">Select All</button>
+            <button onclick="marcarTudo(203,222,false)">Select None</button>
         </h2>
         <div>
             <h3>
                 🛣️ Street Races
-                <p>
-                    <button onclick="marcarTudo(203,208,true)">All</button>
-                    <button onclick="marcarTudo(203,208,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(203,208,true)">All</button>
+                <button onclick="marcarTudo(203,208,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="203" id="203"><label for="203">🛣️ Terminal Velocity<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="204" id="204"><label for="204">🛣️ Ocean Drive<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="205" id="205"><label for="205">🛣️ Border Run<br></label>
@@ -906,11 +890,11 @@
         <div>
             <h3>
                 🏟️ Hyman Memorial Stadium
-                <p>
-                    <button onclick="marcarTudo(209,211,true)">All</button>
-                    <button onclick="marcarTudo(209,211,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(209,211,true)">All</button>
+                <button onclick="marcarTudo(209,211,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="209" id="209"><label for="209">🏟️ Hotring<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="210" id="210"><label for="210">🏟️ Bloodring<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="211" id="211"><label for="211">🏟️ Dirtring<br></label>
@@ -918,11 +902,11 @@
         <div>
             <h3>
                 🚁 Chopper Checkpoints
-                <p>
-                    <button onclick="marcarTudo(212,215,true)">All</button>
-                    <button onclick="marcarTudo(212,215,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(212,215,true)">All</button>
+                <button onclick="marcarTudo(212,215,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="212" id="212"><label for="212">🚁 Ocean Beach<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="213" id="213"><label for="213">🚁 Vice Point<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="214" id="214"><label for="214">🚁 Little Haiti<br></label>
@@ -931,11 +915,11 @@
         <div>
             <h3>
                 🏕️ Off-Road Challenges
-                <p>
-                    <button onclick="marcarTudo(216,219,true)">All</button>
-                    <button onclick="marcarTudo(216,219,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(216,219,true)">All</button>
+                <button onclick="marcarTudo(216,219,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="216" id="216"><label for="216">🏕️ PCJ Playground<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="217" id="217"><label for="217">🏕️ Cone Crazy<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="218" id="218"><label for="218">🏕️ Trial by Dirt<br></label>
@@ -944,11 +928,11 @@
         <div>
             <h3>
                 🚐 Top Fun (RC Races)
-                <p>
-                    <button onclick="marcarTudo(220,222,true)">All</button>
-                    <button onclick="marcarTudo(220,222,false)">None</button>
-                </p>
             </h3>
+            <p>
+                <button onclick="marcarTudo(220,222,true)">All</button>
+                <button onclick="marcarTudo(220,222,false)">None</button>
+            </p>
             <input type="checkbox" onclick="checarPorcentagem()" name="220" id="220"><label for="220">🚐 RC Bandit Race<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="221" id="221"><label for="221">🚐 RC Baron Race<br></label>
             <input type="checkbox" onclick="checarPorcentagem()" name="222" id="222"><label for="222">🚐 RC Raider Pickup<br></label>

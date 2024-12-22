@@ -5,8 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        :root {
+            --primary: #121212;
+            --secondary: #FAF9F6;
+        }
+
         html {
             scroll-behavior: smooth;
+            color: var(--primary);
+            background-color: var(--secondary);
         }
 
         body {
@@ -16,7 +23,7 @@
         }
 
         header {
-            background-color: white;
+            background-color: var(--secondary);
             padding-bottom: 0.6rem;
             vertical-align: middle;
             border-bottom: 0.1rem;
@@ -185,7 +192,6 @@
         }
 
         function saveToCookie() {
-            
             var state = "";
             var expiration_date = new Date();
             var cookie_string;
@@ -220,7 +226,17 @@
         }
 
         function deleteCookie() {
-            document.cookie = "selected=; path=/sa-checklist; Expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure";
+            document.cookie = "selected=; path=.; Expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure";
+        }
+
+        function changeTheme() {
+            const root = document.documentElement;
+
+            const primary = getComputedStyle(root).getPropertyValue("--primary");
+            const secondary = getComputedStyle(root).getPropertyValue("--secondary");
+
+            root.style.setProperty("--primary", secondary);
+            root.style.setProperty("--secondary", primary);
         }
 
     </script>
@@ -234,7 +250,8 @@
             <button onclick="marcarTudo(1,222,true)">100%</button>
             <button onclick="saveToCookie()">Save</button>
             <button onclick="loadFromCookie()">Load</button>
-            <button onclick="deleteCookie()">Delete Saved</button>    
+            <button onclick="deleteCookie()">Delete Saved</button>
+            <button onclick="changeTheme()">Change Theme</button>
         </div>
     </header>
     <section>
@@ -942,7 +959,7 @@
         <p>
             SOURCE: <a href="https://gtaforums.com/topic/918430-the-real-breakdown-of-vice-city/">The real % breakdown of Vice City by KGBeast</a>
             <br>
-            HTML by: <a href="https://twitter.com/deomkds">@deomkds</a>
+            HTML by: <a href="https://bsky.app/profile/deomkds.bsky.social">@deomkds</a>
         </p>
     </footer>
 </body>

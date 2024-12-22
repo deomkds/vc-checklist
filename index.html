@@ -98,6 +98,56 @@
             top: 0;
             width: 100vw;
         }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            outline: none;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        button {
+            all: unset;
+            display: inline-block;
+            padding: 3px 3px;
+            width: 100px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 1px solid var(--primary);
+            text-align: center;
+            vertical-align: middle;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
     </style>
     <title>GTA VC 100% Checklist</title>
     <script>

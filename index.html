@@ -33,7 +33,6 @@
             z-index: 2;
             position: sticky;
             top: 0;
-            width: 100vw;
         }
 
         h1 {
@@ -143,7 +142,7 @@
             all: unset;
             display: inline-block;
             padding: 3px 3px;
-            width: 100px;
+            width: 4.3rem;
             font-weight: normal;
             color: var(--primary);
             background-color: var(--secondary);
@@ -261,9 +260,11 @@
         }
 
         function saveToCookie() {
+            const theme = document.getElementById("theme_btn").textContent;
+            const header = document.getElementById("sticky_btn").textContent;
+            
             let state = "";
-            let expiration_date = new Date();
-            let cookie_string;
+            let cookie_value = "";
 
             for (let index = 1; index <= checkboxes; index++) {
                 let caixa = document.getElementById(index.toString());
@@ -271,31 +272,84 @@
                     state += index.toString() + ",";
                 }
             }
+            state += theme + "," + header
 
-            expiration_date.setFullYear(expiration_date.getFullYear() + 1);
-            cookie_string = "selected=" + state.slice(0,-1) + "; Expires=" + expiration_date.toUTCString() + "; SameSite=None; Secure";
-            console.log(cookie_string);
-            document.cookie = cookie_string;
+            var exp_date = new Date();
+            exp_date.setFullYear(exp_date.getFullYear() + 1);
+
+            var cookie = ["options=", state, "; path=/; expires=", exp_date.toUTCString(), "; SameSite=None; Secure"].join("");
+
+            document.cookie = cookie;
+            console.log(cookie);
+
+            const btn = document.getElementById("save_btn");
+            let timeout = 1500;
+
+            btn.textContent = "Saved!";
+            setTimeout(() => {
+                btn.textContent = "Save";
+            }, timeout);
         }
 
         function loadFromCookie() {
+            const theme = document.getElementById("theme_btn").textContent;
+            const stick = document.getElementById("sticky_btn").textContent;
             let state = document.cookie;
-            console.log(state);
-            let selected = state.slice(9).split(",");
+            let options = state.slice(8).split(",");
 
+            console.log(state);
             marcarTudo(1,checkboxes,false);
 
-            if (selected.length > 1) {
-                selected.forEach(element => {
-                    document.getElementById(element).checked = true;
+            if (options.length > 1) {
+                options.forEach(element => {
+                    switch(element) {
+                        case "Dark": /* This means the user prefers the Light theme. */
+                            if (theme === "Light") {
+                                changeTheme();
+                            };
+                            break;
+                        case "Light": /* This means the user prefers the Dark theme. */
+                            if (theme === "Dark") {
+                                changeTheme();
+                            };
+                            break;
+                        case "Sticky": /* This means the user prefers Static mode. */
+                            if (stick === "Static") {
+                                changeHeaders();
+                            };
+                            break;
+                        case "Static": /* This means the user prefers Sticky mode. */
+                            if (stick === "Sticky") {
+                                changeHeaders();
+                            };
+                            break;
+                        default:
+                            document.getElementById(element).checked = true;
+                    }
                 });
             }
+
+            const btn = document.getElementById("load_btn");
+            let timeout = 1500;
+
+            btn.textContent = "Loaded!";
+            setTimeout(() => {
+                btn.textContent = "Load";
+            }, timeout);
 
             checarPorcentagem();
         }
 
         function deleteCookie() {
-            document.cookie = "selected=; path=.; Expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure";
+            document.cookie = "options=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure";
+
+            const btn = document.getElementById("delete_btn");
+            let timeout = 1500;
+
+            btn.textContent = "Deleted!";
+            setTimeout(() => {
+                btn.textContent = "Delete";
+            }, timeout);
         }
 
         function changeTheme() {
@@ -307,12 +361,32 @@
             root.style.setProperty("--primary", secondary);
             root.style.setProperty("--secondary", primary);
 
-            button_text = document.getElementById("theme_button").innerText;
+            const theme_button = document.getElementById("theme_btn");
 
-            if (button_text == "Dark Mode") {
-                document.getElementById("theme_button").innerText = "Light Mode";
+            if (theme_button.textContent === "Dark") {
+                theme_button.textContent = "Light";
             } else {
-                document.getElementById("theme_button").innerText = "Dark Mode";
+                theme_button.textContent = "Dark";
+            };
+        }
+
+        function changeHeaders() {
+            const headers = document.querySelectorAll(".sticky");
+
+            headers.forEach(header => {
+                if (header.style.position === "static") {
+                    header.style.position = "sticky";
+                } else {
+                    header.style.position = "static";
+                };
+            })
+
+            const sticky_button = document.getElementById("sticky_btn");
+
+            if (sticky_button.textContent === "Static") {
+                sticky_button.textContent = "Sticky";
+            } else {
+                sticky_button.textContent = "Static";
             };
         }
 
@@ -325,17 +399,18 @@
         <div class="buttons">
             <button onclick="marcarTudo(1,222,false)">0%</button>
             <button onclick="marcarTudo(1,222,true)">100%</button>
-            <button onclick="saveToCookie()">Save</button>
-            <button onclick="loadFromCookie()">Load</button>
-            <button onclick="deleteCookie()">Delete Saved</button>
-            <button onclick="changeTheme()">Dark Mode</button>
+            <button onclick="saveToCookie()" id="save_btn">Save</button>
+            <button onclick="loadFromCookie()" id="load_btn">Load</button>
+            <button onclick="deleteCookie()" id="delete_btn">Delete</button>
+            <button onclick="changeTheme()" id="theme_btn">Dark</button>
+            <button onclick="changeHeaders()" id="sticky_btn">Static</button>
         </div>
     </header>
     <section>
         <h2 class="sticky">
             ⭐ Story Missions
-            <button onclick="marcarTudo(1,22,true)">Select All</button>
-            <button onclick="marcarTudo(1,22,false)">Select None</button>
+            <button onclick="marcarTudo(1,22,true)">All</button>
+            <button onclick="marcarTudo(1,22,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -435,8 +510,8 @@
     <section>
         <h2 class="sticky">
             👪 Gang Missions
-            <button onclick="marcarTudo(23,35,true)">Select All</button>
-            <button onclick="marcarTudo(23,35,false)">Select None</button>
+            <button onclick="marcarTudo(23,35,true)">All</button>
+            <button onclick="marcarTudo(23,35,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -491,8 +566,8 @@
     <section>
         <h2 class="sticky">
             🏢 Asset Missions
-            <button onclick="marcarTudo(36,64,true)">Select All</button>
-            <button onclick="marcarTudo(36,64,false)">Select None</button>
+            <button onclick="marcarTudo(36,64,true)">All</button>
+            <button onclick="marcarTudo(36,64,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -617,8 +692,8 @@
     <section>
         <h2 class="sticky">
             ☀️ Sunshine Autos Exports
-            <button onclick="marcarTudo(65,88,true)">Select All</button>
-            <button onclick="marcarTudo(65,88,false)">Select None</button>
+            <button onclick="marcarTudo(65,88,true)">All</button>
+            <button onclick="marcarTudo(65,88,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -684,8 +759,8 @@
     <section>
         <h2 class="sticky">
             ⬅️ Side Missions
-            <button onclick="marcarTudo(89,131,true)">Select All</button>
-            <button onclick="marcarTudo(89,131,false)">Select None</button>
+            <button onclick="marcarTudo(89,131,true)">All</button>
+            <button onclick="marcarTudo(89,131,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -788,8 +863,8 @@
     <section>
         <h2 class="sticky">
             💀 Rampages
-            <button onclick="marcarTudo(132,166,true)">Select All</button>
-            <button onclick="marcarTudo(132,166,false)">Select None</button>
+            <button onclick="marcarTudo(132,166,true)">All</button>
+            <button onclick="marcarTudo(132,166,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -875,8 +950,8 @@
     <section>
         <h2 class="sticky">
             🚲 Unique Jumps
-            <button onclick="marcarTudo(167,202,true)">Select All</button>
-            <button onclick="marcarTudo(167,202,false)">Select None</button>
+            <button onclick="marcarTudo(167,202,true)">All</button>
+            <button onclick="marcarTudo(167,202,false)">None</button>
         </h2>
         <div>
             <h3>
@@ -963,8 +1038,8 @@
     <section>
         <h2 class="sticky">
             🏁 Races
-            <button onclick="marcarTudo(203,222,true)">Select All</button>
-            <button onclick="marcarTudo(203,222,false)">Select None</button>
+            <button onclick="marcarTudo(203,222,true)">All</button>
+            <button onclick="marcarTudo(203,222,false)">None</button>
         </h2>
         <div>
             <h3>

@@ -17,23 +17,28 @@
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 5rem 0 0;
+            font-family: 'Mulish', sans-serif;
+            margin: 0;
             padding: 0;
         }
 
         header {
+            color: var(--primary);
             background-color: var(--secondary);
-            padding-bottom: 0.6rem;
             vertical-align: middle;
-            border-bottom: 0.1rem;
-            border-bottom-style: solid;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Mulish', sans-serif;
         }
 
-        h1, section h2 {
-            margin: 1rem 0 0;
-            padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+        header.sticky {
+            z-index: 2;
+            position: sticky;
+            top: 0;
+            width: 100vw;
+        }
+
+        h1 {
+            margin: 0;
+            padding: 0.5rem 0.5rem 0.5rem 0.5rem;
         }
 
         h3 {
@@ -51,14 +56,16 @@
             display: inline-block;
         }
 
-        section div {
-            display: inline-block;
-            width: 17rem;
-            /*
-            border-width: 0.1rem;
-            border-style: solid;
-            */
+        section h2 {
+            margin: 0;
             padding: 0.5rem;
+        }
+
+        section div {
+            white-space: nowrap;
+            display: inline-block;
+            padding: 0.5rem;
+            margin-right: 0.1rem;
             vertical-align: top;
         }
 
@@ -66,38 +73,52 @@
             vertical-align: middle;
             font-size: 1.3rem;
             font-weight: bold;
-            padding-left: 0.5rem;
+            padding: 0.3rem 0.5rem;
         }
 
         div.percent {
             vertical-align: middle;
-            font-size: large;
-            padding-left: 0.5rem;
+            padding: 0.3rem 0.5rem;
         }
 
         div.buttons {
             vertical-align: middle;
-            padding: 0.5rem 0.5rem 0;
+            padding: 0.3rem 0.5rem;
+            margin-bottom: 0.0rem;
         }
 
         label {
-            padding-left: 3%;
+            padding: 0.5% 3% 0.5% 2%;
+            border-radius: 15px;
+            vertical-align: middle;
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+            cursor: pointer;
+            color: var(--primary);
+            background-color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        label:hover {
+            color: var(--secondary);
+            background-color: var(--primary);
+            border: 1px solid var(--primary);
         }
 
         footer {
             padding: 1rem;
+            color: var(--primary);
         }
 
         section {
-            border-bottom: solid;
-            border-bottom-width: 0.1rem;
-            padding: 0.3rem 0 1rem;
+            padding-bottom: 0rem;
         }
 
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100vw;
+        h2.sticky {
+            z-index: 1;
+            position: sticky;
+            background-color: var(--secondary);
+            border-bottom: 1px solid;
+            top: 6rem;
         }
 
         input[type="checkbox"] {
@@ -124,16 +145,16 @@
             padding: 3px 3px;
             width: 100px;
             font-weight: normal;
-            background-color: var(--secondary);
             color: var(--primary);
+            background-color: var(--secondary);
+            border: 1px solid var(--primary);
             font-size: 12px;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Mulish', sans-serif;
             border-radius: 100px;
             cursor: pointer;
-            border: 1px solid var(--primary);
             text-align: center;
             vertical-align: middle;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease, font-weight 0.3s ease;
             /* Block text selection inside buttons. */
             user-select: none;
             -webkit-user-select: none;
@@ -141,14 +162,9 @@
         }
 
         button:hover {
-            background-color: var(--primary);
             color: var(--secondary);
-            transform: scale(1.05);
-        }
-
-        button:active {
             background-color: var(--primary);
-            color: var(--secondary);
+            border: 1px solid var(--primary);
         }
 
     </style>
@@ -290,6 +306,14 @@
 
             root.style.setProperty("--primary", secondary);
             root.style.setProperty("--secondary", primary);
+
+            button_text = document.getElementById("theme_button").innerText;
+
+            if (button_text == "Dark Mode") {
+                document.getElementById("theme_button").innerText = "Light Mode";
+            } else {
+                document.getElementById("theme_button").innerText = "Dark Mode";
+            };
         }
 
     </script>
@@ -304,11 +328,11 @@
             <button onclick="saveToCookie()">Save</button>
             <button onclick="loadFromCookie()">Load</button>
             <button onclick="deleteCookie()">Delete Saved</button>
-            <button onclick="changeTheme()">Change Theme</button>
+            <button onclick="changeTheme()">Dark Mode</button>
         </div>
     </header>
     <section>
-        <h2>
+        <h2 class="sticky">
             ⭐ Story Missions
             <button onclick="marcarTudo(1,22,true)">Select All</button>
             <button onclick="marcarTudo(1,22,false)">Select None</button>
@@ -409,7 +433,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             👪 Gang Missions
             <button onclick="marcarTudo(23,35,true)">Select All</button>
             <button onclick="marcarTudo(23,35,false)">Select None</button>
@@ -465,7 +489,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             🏢 Asset Missions
             <button onclick="marcarTudo(36,64,true)">Select All</button>
             <button onclick="marcarTudo(36,64,false)">Select None</button>
@@ -591,7 +615,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             ☀️ Sunshine Autos Exports
             <button onclick="marcarTudo(65,88,true)">Select All</button>
             <button onclick="marcarTudo(65,88,false)">Select None</button>
@@ -658,7 +682,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             ⬅️ Side Missions
             <button onclick="marcarTudo(89,131,true)">Select All</button>
             <button onclick="marcarTudo(89,131,false)">Select None</button>
@@ -762,7 +786,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             💀 Rampages
             <button onclick="marcarTudo(132,166,true)">Select All</button>
             <button onclick="marcarTudo(132,166,false)">Select None</button>
@@ -849,7 +873,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             🚲 Unique Jumps
             <button onclick="marcarTudo(167,202,true)">Select All</button>
             <button onclick="marcarTudo(167,202,false)">Select None</button>
@@ -937,7 +961,7 @@
         </div>
     </section>
     <section>
-        <h2>
+        <h2 class="sticky">
             🏁 Races
             <button onclick="marcarTudo(203,222,true)">Select All</button>
             <button onclick="marcarTudo(203,222,false)">Select None</button>
